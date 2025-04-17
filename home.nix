@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixvim, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -20,7 +20,16 @@
   home.packages = [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-    # pkgs.hello
+    pkgs.hello
+
+    # neovim/nixvim config
+    nixvim.default
+
+    # font
+    pkgs.fira-code-nerdfont
+
+    # clipboard
+    pkgs.wl-clipboard
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -68,9 +77,78 @@
   #  /etc/profiles/per-user/uzen/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Shell
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = "fish_vi_key_bindings  # turn on vim mode";
+  };
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  # dev stuff
+  programs.git = {
+    enable = true;
+    userName = "CookieUzen";
+    userEmail = "uzen@cookieuz.io";
+  };
+  programs.gh.enable = true;
+
+
+  # Terminal
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window = {
+        opacity = 0.90; 
+        blur = true;
+      };
+      font = {
+        normal = { family = "FiraCode Nerd Font"; style = "Regular"; };
+        size = 11.25;
+      };
+      terminal.shell = "fish";
+
+      general.import = [
+        "${pkgs.alacritty-theme}/nord.toml"
+      ];
+    };
+    # theme = "nord";
+  };
+
+  # Browser
+  programs.floorp = {
+    enable = true;
+    policies = {
+      ExtensionSettings = {
+        "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+        # uBlock Origin:
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+          private_browsing =  true;
+        };
+        # bitwarden
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          installation_mode = "force_installed";
+          private_browsing =  true;
+        };
+        # kagi
+        "search@kagi.com" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
+          installation_mode = "force_installed";
+          private_browsing =  true;
+        };
+      };
+      DisableAccounts = true;
+    };
+  };
 }
