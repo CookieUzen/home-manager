@@ -35,6 +35,7 @@
         # the path to your home.nix.
         modules = [ 
           ./home.nix
+          ./gui.nix
 
           # KDE Config
           plasma-manager.homeManagerModules.plasma-manager

@@ -15,6 +15,10 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
@@ -24,12 +28,6 @@
 
     # neovim/nixvim config
     nixvim.default
-
-    # font
-    pkgs.fira-code-nerdfont
-
-    # clipboard
-    pkgs.wl-clipboard
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -86,7 +84,11 @@
   # Shell
   programs.fish = {
     enable = true;
-    interactiveShellInit = "fish_vi_key_bindings  # turn on vim mode";
+    interactiveShellInit = ''
+      fish_vi_key_bindings  # turn on vim mode
+      set fish_greeting""  # disable initial fish greeting
+    '';
+
   };
   programs.starship = {
     enable = true;
@@ -101,59 +103,44 @@
   };
   programs.gh.enable = true;
 
-
-  # Terminal
-  programs.alacritty = {
+  programs.tmux = {
     enable = true;
-    settings = {
-      window = {
-        opacity = 0.90; 
-        blur = true;
-      };
-      font = {
-        normal = { family = "FiraCode Nerd Font"; style = "Regular"; };
-        size = 11.25;
-      };
-      terminal.shell = "fish";
 
-      general.import = [
-        "${pkgs.alacritty-theme}/nord.toml"
-      ];
-    };
-    # theme = "nord";
-  };
+    # Use Control A for prefix
+    prefix = "C-a";
 
-  # Browser
-  programs.floorp = {
-    enable = true;
-    policies = {
-      ExtensionSettings = {
-        "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-        # uBlock Origin:
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-          private_browsing =  true;
-        };
-        # bitwarden
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-          installation_mode = "force_installed";
-          private_browsing =  true;
-        };
-        # kagi
-        "search@kagi.com" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
-          installation_mode = "force_installed";
-          private_browsing =  true;
-        };
-        # Vimium
-        "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
-          installation_mode = "force_installed";
-        };
-      };
-      DisableAccounts = true;
-    };
+    # Default shell to fish
+    shell = "${pkgs.fish}/bin/fish";
+    
+    keyMode = "vi";
+    mouse = true;
+
+    # Vim mode
+    customPaneNavigationAndResize = true;
+
+    # Sensible plugin
+    sensibleOnTop = true;
+
+    plugins = with pkgs; [
+      tmuxPlugins.vim-tmux-navigator
+      tmuxPlugins.tmux-powerline
+      {
+        plugin = tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '60' # minutes
+        '';
+      }
+      {
+        plugin = tmuxPlugins.catppuccin;
+        extraConfig = "set -g @catppuccin_flavor 'macchiato' # latte, frappe, macchiato or mocha";
+      }
+    ];
+
+    extraConfig = ''
+      # Vim like splits
+      bind-key v split-window -h
+      bind-key s split-window -v
+    '';
   };
 }
