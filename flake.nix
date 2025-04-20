@@ -14,9 +14,15 @@
       url = "github:cookieuzen/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # plasma-manager
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -27,7 +33,13 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        modules = [ 
+          ./home.nix
+
+          # KDE Config
+          plasma-manager.homeManagerModules.plasma-manager
+          ./kde.nix
+        ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
