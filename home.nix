@@ -141,6 +141,9 @@
       # Vim like splits
       bind-key v split-window -h
       bind-key s split-window -v
+
+      # Set escape time to 0
+      set -sg escape-time 0
     '';
   };
 }

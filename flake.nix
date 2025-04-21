@@ -20,9 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    # nix-flatpak 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest"; # latest stable
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, nix-flatpak, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -34,6 +36,9 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ 
+          # Providing Flatpak
+          nix-flatpak.homeManagerModules.nix-flatpak
+
           ./home.nix
           ./gui.nix
 

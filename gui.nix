@@ -2,17 +2,11 @@
 
 {
   home.packages = [
-    pkgs.discord
-    pkgs.bitwarden-desktop
-
     # font
     pkgs.fira-code-nerdfont
 
     # wayland clipboard
     pkgs.wl-clipboard
-
-	pkgs.tailscale
-
   ];
 
   # Terminal
@@ -73,7 +67,23 @@
 
   # tailscale
   services.trayscale = {
-	enable = true;
-	hideWindow = true;
+    enable = true;
+    hideWindow = true;
+  };
+
+  # Flatpaks
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "com.moonlight_stream.Moonlight"
+      "com.discordapp.Discord"
+      "com.bitwarden.desktop"
+      "dev.deedles.Trayscale"
+    ];
+    update.auto = {
+      enable = true;
+      onCalendar = "weekly";
+    };
   };
 }
+
