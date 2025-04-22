@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs, nixvim, flox, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -16,7 +16,7 @@
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   nixpkgs.config = {
-    allowUnfree = true;
+    allowUnfree = false;
   };
 
   # The home.packages option allows you to install Nix packages into your
@@ -28,6 +28,8 @@
 
     # neovim/nixvim config
     nixvim.default
+
+    pkgs.devbox
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

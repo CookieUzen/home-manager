@@ -7,7 +7,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # Import nixvim config
     nixvim = {
@@ -17,7 +17,7 @@
     # plasma-manager
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
     };
     # nix-flatpak 
@@ -49,7 +49,9 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-	      extraSpecialArgs = { nixvim = nvimpkgs; };
+	      extraSpecialArgs = { 
+          nixvim = nvimpkgs; 
+        };
       };
     };
 }

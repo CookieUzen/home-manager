@@ -19,9 +19,9 @@
       };
       font = {
         normal = { family = "FiraCode Nerd Font"; style = "Regular"; };
-        size = 11.25;
+        size = 10;
       };
-      terminal.shell = "tmux";
+      terminal.shell = "fish";
 
       general.import = [
         # "${pkgs.alacritty-theme}/nord.toml"
@@ -79,11 +79,17 @@
       "com.discordapp.Discord"
       "com.bitwarden.desktop"
       "dev.deedles.Trayscale"
+      "com.nextcloud.desktopclient.nextcloud"
+      "com.logseq.Logseq"
+      "org.signal.Signal"
     ];
     update.auto = {
       enable = true;
       onCalendar = "weekly";
     };
   };
+
+  # Easyeffects
+  services.easyeffects.enable = true;
 }
 
