@@ -100,10 +100,16 @@
   # dev stuff
   programs.git = {
     enable = true;
+    lfs.enable = true;
     userName = "CookieUzen";
     userEmail = "uzen@cookieuz.io";
   };
-  programs.gh.enable = true;
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper = {
+      enable = true;
+    };
+  };
 
   programs.tmux = {
     enable = true;

@@ -7,6 +7,8 @@
 
     # wayland clipboard
     pkgs.wl-clipboard
+
+    pkgs.godot_4
   ];
 
   # Terminal
