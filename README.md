@@ -18,4 +18,4 @@ home-manager --flake .#shellOnly switch
 ## Docker
 
 A docker container is built with the `Dockerfile` on the latest Ubuntu with home-manager already applied.
-You can pull it at `ghcr.io/cookieuzen/devshell:latest`.
+You can pull it at `ghcr.io/cookieuzen/devshell:main`.
