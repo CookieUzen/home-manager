@@ -30,27 +30,41 @@
       pkgs = nixpkgs.legacyPackages.${system};
       nvimpkgs = nixvim.packages.${system};
     in {
-      homeConfigurations."uzen" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations = {
+        desktop = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ 
-          ./home.nix
+          # Specify your home configuration modules here, for example,
+          # the path to your home.nix.
+          modules = [
+            ./home.nix
 
-          # providing flatpak
-          nix-flatpak.homemanagermodules.nix-flatpak
-          ./gui.nix
+            # providing flatpak
+            nix-flatpak.homeManagerModules.nix-flatpak
+            ./gui.nix
 
-          # KDE Config
-          plasma-manager.homeManagerModules.plasma-manager
-          ./kde.nix
-        ];
+            # KDE Config
+            plasma-manager.homeManagerModules.plasma-manager
+            ./kde.nix
+          ];
 
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-	      extraSpecialArgs = { 
-          nixvim = nvimpkgs; 
+          # Optionally use extraSpecialArgs
+          # to pass through arguments to home.nix
+          extraSpecialArgs = {
+            nixvim = nvimpkgs;
+          };
+        };
+
+        shellOnly = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          modules = [
+            ./home.nix
+          ];
+
+          extraSpecialArgs = {
+            nixvim = nvimpkgs;
+          };
         };
       };
     };
