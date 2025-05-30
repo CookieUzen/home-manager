@@ -25,12 +25,13 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     pkgs.hello
+    pkgs.killall
+    pkgs.perl540Packages.vidir
 
     # neovim/nixvim config
     nixvim.default
 
     pkgs.devbox
-    pkgs.btop
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -79,12 +80,14 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    ZK_SHELL = "/bin/sh";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   # Shell
+  programs.bash.enable = true;
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
@@ -155,4 +158,31 @@
       set -sg escape-time 0
     '';
   };
+
+  programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "nord";
+      theme_background = false;
+      vim_keys = true;
+    };
+  };
+
+  # note taking
+  programs.zk.enable = true;
+  programs.fzf.enable = true;
+
+  # zoxide
+  programs.zoxide.enable = true;
+  home.shellAliases = {
+    z = "zoxide";
+    cd = "zoxide";
+  };
+
+  # direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
 }

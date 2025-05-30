@@ -13,7 +13,7 @@ home-manager --flake .#shellOnly switch
 ```
 
 `shellOnly` contains all the non GUI configs.
-`desktop` contains the rest, including terminal, kde, flatpak config etc.
+`"uzen"` contains the rest, including terminal, kde, flatpak config etc.
 
 ## Docker
 

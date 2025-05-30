@@ -38,7 +38,7 @@
     enable = true;
     policies = {
       ExtensionSettings = {
-        "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+        "*".installation_mode = "force_installed"; # blocks all addons except the ones specified below
         # uBlock Origin:
         "uBlock0@raymondhill.net" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
@@ -88,6 +88,15 @@
     update.auto = {
       enable = true;
       onCalendar = "weekly";
+    };
+  };
+
+  services.flatpak.overrides = {
+    global = {
+      Context.sockets = ["wayland" "!x11" "!fallback-x11"];
+      Environment = {
+        ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      };
     };
   };
 

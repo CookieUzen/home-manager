@@ -26,7 +26,8 @@ RUN curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ENV USER=uzen \
     HOME=/home/uzen \
     PATH=/nix/var/nix/profiles/default/bin:/home/uzen/.nix-profile/bin:$PATH \
-    NIX_CONFIG="experimental-features = nix-command flakes"
+    NIX_CONFIG="experimental-features = nix-command flakes" \
+    TERM=xterm-256color
 
 # Bootstrap home-manager
 RUN mkdir -p .config/home-manager

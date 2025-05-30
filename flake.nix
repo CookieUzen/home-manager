@@ -31,7 +31,7 @@
       nvimpkgs = nixvim.packages.${system};
     in {
       homeConfigurations = {
-        desktop = home-manager.lib.homeManagerConfiguration {
+        "uzen" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           # Specify your home configuration modules here, for example,
@@ -46,6 +46,9 @@
             # KDE Config
             plasma-manager.homeManagerModules.plasma-manager
             ./kde.nix
+
+            # Hyprland config
+            ./hypr.nix
           ];
 
           # Optionally use extraSpecialArgs
