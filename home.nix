@@ -176,7 +176,6 @@
   programs.zoxide.enable = true;
   home.shellAliases = {
     z = "zoxide";
-    cd = "zoxide";
   };
 
   # direnv
