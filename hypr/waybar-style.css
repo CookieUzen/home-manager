@@ -42,6 +42,7 @@
   font-family: FiraCode Nerd Font Mono;
   font-size: 17px;
   min-height: 0;
+  /* transition: none; */ /* Uncomment to disable all transitions for less resource usage */
 }
 
 #waybar {
@@ -59,64 +60,98 @@
 
 #workspaces button {
   color: @lavender;
-  border-radius: 1rem;
-  padding: 0.4rem;
+  border-radius: 1rem; /* Individual button rounding */
+  padding: 0.2rem 0.6rem; /* Adjust padding */
+  margin: 0.2rem; /* Spacing between buttons */
 }
 
 #workspaces button.active {
   color: @sky;
-  border-radius: 1rem;
+  background-color: @surface1; /* Highlight active workspace */
 }
 
 #workspaces button:hover {
   color: @sapphire;
-  border-radius: 1rem;
+  background-color: @surface2;
 }
 
-#tray,
+/* Grouped modules on the right */
+#mpris,
+#custom-internet,
+#custom-tailscale,
+#pulseaudio,
 #backlight,
-#clock,
-#battery,
-#pulseaudio {
+#battery {
   background-color: @surface0;
   padding: 0.5rem 1rem;
-  margin: 5px 0;
+  margin: 5px 0; /* Vertical margin, no horizontal margin to keep them connected */
 }
 
-#clock {
-  color: @blue;
-  border-radius: 1rem 1rem 1rem 1rem;
+/* Specific styling for grouped modules */
+#mpris {
+  color: @mauve; /* Example color */
+  border-radius: 1rem 0 0 1rem; /* Leftmost in group */
+  margin-left: 1rem; /* Gap before this group starts */
 }
 
-#battery {
-  color: @green;
-  border-radius: 0px 1rem 1rem 0px;
+#custom-internet {
+  color: @teal;
+  /* No border-radius, it's in the middle */
 }
-
-#battery.charging {
-  color: @green;
-}
-
-#battery.warning:not(.charging) {
+#custom-internet.disconnected {
   color: @red;
 }
 
-#backlight {
-  color: @yellow;
+#custom-tailscale {
+  color: @lavender;
+  /* No border-radius */
 }
-
-#backlight {
-  border-radius: 0;
+#custom-tailscale.connected {
+  color: @green;
+}
+#custom-tailscale.exit-node {
+  color: @sapphire;
+}
+#custom-tailscale.disconnected {
+  color: @overlay0;
 }
 
 #pulseaudio {
   color: @maroon;
-  border-radius: 1rem 0px 0px 1rem;
-  margin-left: 1rem;
+  /* No border-radius */
+}
+
+#backlight {
+  color: @yellow;
+  /* No border-radius */
+}
+
+#battery {
+  color: @green;
+  border-radius: 0 1rem 1rem 0; /* Rightmost in group */
+}
+#battery.charging, #battery.plugged {
+  color: @green;
+}
+#battery.warning:not(.charging) {
+  color: @red;
+}
+
+/* Standalone modules */
+#clock {
+  background-color: @surface0;
+  padding: 0.5rem 1rem;
+  margin: 5px; /* Margin for standalone module */
+  color: @blue;
+  border-radius: 1rem; /* Fully rounded as it's standalone */
 }
 
 #tray {
-  margin-left: 1rem;
+  background-color: @surface0;
+  padding: 0.5rem 1rem;
+  margin: 5px;
+  margin-left: 1rem; /* If you want a gap before tray */
   margin-right: 1rem;
   border-radius: 1rem;
 }
+

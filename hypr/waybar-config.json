@@ -1,0 +1,89 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "mpris",
+        "custom/internet",
+        "custom/tailscale",
+        "pulseaudio",
+        "backlight",
+        "battery",
+        "tray"
+    ],
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "persistent_workspaces": {
+            "*": 5 // Show up to 5 workspaces, or specify monitor like "eDP-1": 5
+        }
+    },
+    "mpris": {
+        "format": "{player_icon} {status_icon}  {title}",
+        "format-paused": "{player_icon}   {title}",
+        "format-stopped": "{player_icon}   {title}",
+        "format-playing": "{player_icon}   {title}",
+        "player-icons": {
+            "default": "",
+            "spotify": "",
+            "firefox": ""
+        },
+        "status-icons": {
+            "playing": "",
+            "paused": "",
+            "stopped": ""
+        },
+        "ignored-players": ["firefox"],
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-click-middle": "playerctl stop",
+        "tooltip": true
+    },
+    "custom/internet": {
+        "exec": "~/.config/waybar/scripts/internet-status.sh",
+        "return-type": "json",
+        "interval": 10,
+        "on-click": "~/.config/waybar/scripts/internet-dropdown.sh",
+        "format": "{}"
+    },
+    "custom/tailscale": {
+        "exec": "~/.config/waybar/scripts/tailscale-status.sh",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "~/.config/waybar/scripts/tailscale-toggle.sh",
+        "format": "{}"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-middle": "pavucontrol",
+        "on-click-right": "easyeffects"
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["", "", "", "", ""],
+        "format-plugged": " {capacity}%",
+        "format-charging": " {capacity}%",
+        "on-click": "battery"
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": " {:%d/%m/%Y}",
+        "format": " {:%H:%M}"
+    },
+    "tray": {
+        "spacing": 10,
+        "icon-size": 20
+    }
+}
+
