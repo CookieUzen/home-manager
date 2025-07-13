@@ -3,7 +3,7 @@
 {
   home.packages = [
     # font
-    pkgs.fira-code-nerdfont
+    pkgs.nerd-fonts.fira-code
 
     # wayland clipboard
     pkgs.wl-clipboard
