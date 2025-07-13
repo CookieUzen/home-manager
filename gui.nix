@@ -24,13 +24,8 @@
         size = 10;
       };
       terminal.shell = "fish";
-
-      general.import = [
-        # "${pkgs.alacritty-theme}/nord.toml"
-        "${pkgs.alacritty-theme}/catppuccin-macchiato.toml"
-      ];
     };
-    # theme = "nord";
+    theme = "catppuccin_macchiato";
   };
 
   # Browser
