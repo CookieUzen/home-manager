@@ -14,6 +14,7 @@
     libnotify
     wofi
     httping
+    hyprshot
   ];
 
   services.gnome-keyring.enable = true;

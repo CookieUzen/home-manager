@@ -52,12 +52,8 @@ fi
 # Process selection
 case "$wofi_selection" in
   "[Disconnect]")
-    if [ -n "$CURRENT_EXIT" ]; then
-      tailscale set --exit-node=""
-      notify_send "Tailscale" "Disconnected from exit node"
-    else
-      notify_send "Tailscale" "Not currently using an exit node"
-    fi
+    tailscale set --exit-node=""
+    notify_send "Tailscale" "Disconnected from exit-node"
     ;;
   "[Reconnect Last]")
     if [ -f "$LAST_EXIT_FILE" ]; then

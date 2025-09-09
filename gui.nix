@@ -73,12 +73,10 @@
     enable = true;
     packages = [
       "com.moonlight_stream.Moonlight"
-      "com.discordapp.Discord"
-      "com.bitwarden.desktop"
       "dev.deedles.Trayscale"
       "com.nextcloud.desktopclient.nextcloud"
-      "com.logseq.Logseq"
       "org.signal.Signal"
+      "app.zen_browser.zen"
     ];
     update.auto = {
       enable = true;
