@@ -2,13 +2,15 @@
 
 {
   home.packages = [
-    # font
-    pkgs.nerd-fonts.fira-code
-
     # wayland clipboard
     pkgs.wl-clipboard
 
     pkgs.godot_4
+  ];
+
+  fonts.fonts = with pkgs; [
+    nerd-fonts.fira-code
+    ibm-plex
   ];
 
   # Terminal

@@ -8,7 +8,6 @@
     brightnessctl
     networkmanagerapplet
     gcr
-    tailscale
     jq
     curl
     libnotify
