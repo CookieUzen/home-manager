@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, flox, ... }:
+{ config, pkgs, nixvim, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should

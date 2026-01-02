@@ -3,10 +3,10 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # Import nixvim config
@@ -22,9 +22,19 @@
     };
     # nix-flatpak 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest"; # latest stable
+    # DMS
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    # Niri
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, nix-flatpak, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, nix-flatpak, dms, niri, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -44,11 +54,17 @@
             ./gui.nix
 
             # KDE Config
-            plasma-manager.homeManagerModules.plasma-manager
+            plasma-manager.homeModules.plasma-manager
             ./kde.nix
 
             # Hyprland config
             ./hypr.nix
+
+            # niri
+            dms.homeModules.dankMaterialShell.default
+            dms.homeModules.dankMaterialShell.niri
+            niri.homeModules.niri
+            ./niri.nix
           ];
 
           # Optionally use extraSpecialArgs
