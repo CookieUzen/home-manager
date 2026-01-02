@@ -2,16 +2,18 @@
 
 {
   home.packages = [
+    # Fonts
+    pkgs.nerd-fonts.fira-code
+    pkgs.ibm-plex
+
     # wayland clipboard
     pkgs.wl-clipboard
 
     pkgs.godot_4
+    pkgs.mpv
   ];
 
-  fonts.fonts = with pkgs; [
-    nerd-fonts.fira-code
-    ibm-plex
-  ];
+  fonts.fontconfig.enable = true;
 
   # Terminal
   programs.alacritty = {
