@@ -11,13 +11,23 @@
     package = pkgs.niri;
     settings = {
 
+      # Dummy Plug Monitor
+      outputs.DP-3 = {
+        mode.width = 1400;
+        mode.height = 1050;
+        # mode.refresh = 60.0;
+        position.x = 0;
+        position.y = 0;
+        scale = 1;
+      };
+
       # Key bindings with vim-style navigation
       binds = {
         # Window navigation (vim hjkl)
-        "Mod+h".action.focus-column-left = {};
+        "Mod+h".action.focus-column-left-or-last = {};
         "Mod+j".action.focus-window-down = {};
         "Mod+k".action.focus-window-up = {};
-        "Mod+l".action.focus-column-right = {};
+        "Mod+l".action.focus-column-right-or-first = {};
 
         # Move windows (vim hjkl with Shift)
         "Mod+Shift+h".action.move-column-left-or-to-monitor-left = {};
@@ -32,6 +42,12 @@
         # Move Up and Down Workspace
         "Mod+Ctrl+j".action.focus-window-down = {};
         "Mod+Ctrl+k".action.focus-window-up = {};
+
+        # Switch monitors
+        "Mod+e".action.focus-monitor-right = [];
+        "Mod+q".action.focus-monitor-left = [];
+        "Mod+Ctrl+Q".action.move-window-to-monitor-left = [];
+        "Mod+Ctrl+E".action.move-window-to-monitor-right = [];
 
         # Vim-style window operations
         "Mod+Shift+q".action.close-window = {};
@@ -75,19 +91,82 @@
 
         # # Vim-style search and command
         "Mod+Return".action.spawn = ["alacritty"]; # or your terminal
+
+        "Mod+Space" = {
+          action.spawn = ["dms" "ipc" "spotlight" "toggle"];
+          hotkey-overlay.title = "Toggle Application Launcher";
+        };
+        "Mod+N" = {
+          action.spawn = ["dms" "ipc" "notifications" "toggle"];
+          hotkey-overlay.title = "Toggle Notification Center";
+        };
+        "Mod+Comma" = {
+          action.spawn = ["dms" "ipc" "settings" "toggle"];
+          hotkey-overlay.title = "Toggle Settings";
+        };
+        "Mod+P" = {
+          action.spawn = ["dms" "ipc" "notepad" "toggle"];
+          hotkey-overlay.title = "Toggle Notepad";
+        };
+        "Super+Alt+L" = {
+          action.spawn = ["dms" "ipc" "lock" "lock"];
+          hotkey-overlay.title = "Toggle Lock Screen";
+        };
+        "Mod+X" = {
+          action.spawn = ["dms" "ipc" "powermenu" "toggle"];
+          hotkey-overlay.title = "Toggle Power Menu";
+        };
+        "XF86AudioRaiseVolume" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "audio" "increment" "3"];
+        };
+        "XF86AudioLowerVolume" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "audio" "decrement" "3"];
+        };
+        "XF86AudioMute" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "audio" "mute"];
+        };
+        "XF86AudioMicMute" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "audio" "micmute"];
+        };
+        "XF86MonBrightnessUp" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "brightness" "increment" "5" ""];
+        };
+        "XF86MonBrightnessDown" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "brightness" "decrement" "5" ""];
+        };
+        "Mod+Alt+N" = {
+          allow-when-locked = true;
+          action.spawn = ["dms" "ipc" "night" "toggle"];
+          hotkey-overlay.title = "Toggle Night Mode";
+        };
+        "Mod+V" = {
+          action.spawn = ["dms" "ipc" "clipboard" "toggle"];
+          hotkey-overlay.title = "Toggle Clipboard Manager";
+        };
+        "Mod+M" = {
+          action.spawn = ["dms" "ipc" "processlist" "toggle"];
+          hotkey-overlay.title = "Toggle Process List";
+        };
       };
 
       # Other settings
       input = {
         mod-key = "Alt";
+        keyboard.xkb.options = "ctrl:nocaps";
       };
     };
   };
 
-  programs.dankMaterialShell = {
+  programs.dank-material-shell = {
     enable = true;
     niri = {
-      enableKeybinds = true;   # Sets static preset keybinds
+      # enableKeybinds = true;   # Sets static preset keybinds
       enableSpawn = true;      # Auto-start DMS with niri and cliphist, if enabled
     };
   };

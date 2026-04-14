@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, pkgs-unstable, ...}:
 
 {
   home.packages = [
@@ -20,7 +20,7 @@
     enable = true;
     settings = {
       window = {
-        opacity = 0.90; 
+        opacity = 1; 
         blur = true;
       };
       font = {

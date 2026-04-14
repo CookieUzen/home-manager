@@ -26,12 +26,20 @@
     # # "Hello, world!" when run.
     pkgs.hello
     pkgs.killall
-    pkgs.perl540Packages.vidir
+    pkgs.perl5Packages.vidir
 
     # neovim/nixvim config
     nixvim.default
 
     pkgs.devbox
+    pkgs.devenv
+
+    pkgs.python3Minimal
+
+    pkgs.ncdu
+    pkgs.zip
+    pkgs.unzip
+    pkgs.unar
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -81,6 +89,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     ZK_SHELL = "/bin/sh";
+    devbox_no_prompt = "true";  # devbox stuff
   };
 
   # Let Home Manager install and manage itself.
