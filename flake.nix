@@ -19,21 +19,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    # nix-flatpak 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # nix-flatpack \
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest"; # latest stable
-    # DMS
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Niri
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # # DMS
+    # dms = {
+    #   url = "github:AvengeMedia/DankMaterialShell/stable";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # # Niri
+    # niri = {
+    #   url = "github:sodiboo/niri-flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, nix-flatpak, dms, niri, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, plasma-manager, nix-flatpak, agenix, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -57,13 +61,15 @@
             ./kde.nix
 
             # Hyprland config
-            ./hypr.nix
+            # ./hypr.nix
 
             # niri
-            dms.homeModules.dankMaterialShell.default
-            dms.homeModules.dankMaterialShell.niri
-            niri.homeModules.niri
-            ./niri.nix
+            # dms.homeModules.dank-material-shell.default
+            # dms.homeModules.niri
+            # niri.homeModules.niri
+            # ./niri.nix
+
+            agenix.homeManagerModules.default
           ];
 
           # Optionally use extraSpecialArgs

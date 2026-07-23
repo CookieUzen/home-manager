@@ -9,4 +9,7 @@
     ];
   };
 
+  home.packages = [
+    pkgs.kdePackages.plasma-keyboard
+  ];
 }

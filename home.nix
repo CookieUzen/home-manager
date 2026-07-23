@@ -34,12 +34,15 @@
     pkgs.devbox
     pkgs.devenv
 
-    pkgs.python3Minimal
+    pkgs.python314Packages.ipython
 
     pkgs.ncdu
     pkgs.zip
     pkgs.unzip
     pkgs.unar
+    pkgs.age
+
+    pkgs.nps
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -90,6 +93,17 @@
     EDITOR = "nvim";
     ZK_SHELL = "/bin/sh";
     devbox_no_prompt = "true";  # devbox stuff
+    KAGI_API_KEY_FILE = config.age.secrets.kagi-api-key.path;
+  };
+
+  # Manage secrets
+  age = {
+    identityPaths = [ "/home/uzen/.ssh/id_ed25519" ];
+    secrets = {
+      kagi-api-key = {
+        file = secrets/kagi-api-key.age;
+      };
+    };
   };
 
   # Let Home Manager install and manage itself.
@@ -114,13 +128,68 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "CookieUzen";
-    userEmail = "uzen@cookieuz.io";
+    settings = {
+      user ={
+        name = "CookieUzen";
+        email = "uzen@cookieuz.io";
+      };
+      init.defaultBranch = "main";
+    };
   };
   programs.gh = {
     enable = true;
     gitCredentialHelper = {
       enable = true;
+    };
+  };
+  
+  programs.zellij = {
+    enable = true;
+    enableFishIntegration = false;
+    enableBashIntegration = false;
+    attachExistingSession = false;
+    exitShellOnExit = false;
+    settings = {
+      theme = "catppuccin-macchiato";
+      default_shell = "fish";
+      default_mode = "locked";
+    };
+  };
+
+  programs.herdr = {
+    enable = true;
+    settings = {
+      terminal = {
+        default_shell = "fish";
+      };
+    };
+  };
+
+  programs.pi-coding-agent = {
+    enable = true;
+    models = {
+      providers = {
+        ollama = {
+          api = "openai-completions";
+          apiKey = "ollama";
+          baseUrl = "http://localhost:11434/v1";
+          models = [
+            {
+              id = "qwen3.6";
+            }
+            {
+              id = "lfm2.5:8b";
+            }
+            {
+              id = "gemma4:26b";
+            }
+          ];
+        };
+      };
+    };
+    settings = {
+      defaultModel = "qwen3.6";
+			defaultProvider = "ollama";
     };
   };
 

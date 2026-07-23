@@ -11,6 +11,9 @@
 
     pkgs.godot_4
     pkgs.mpv
+    pkgs.darktable
+    pkgs.immich-go
+    pkgs.zathura
   ];
 
   fonts.fontconfig.enable = true;
@@ -20,7 +23,7 @@
     enable = true;
     settings = {
       window = {
-        opacity = 1; 
+        opacity = 0.9; 
         blur = true;
       };
       font = {
@@ -98,6 +101,19 @@
   };
 
   # Easyeffects
-  services.easyeffects.enable = true;
+  # services.easyeffects.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    config = {
+      common = {
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      };
+    };
+  };
 }
 

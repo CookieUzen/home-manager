@@ -8,7 +8,7 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.niri;
+    # package = null;
     settings = {
 
       # Dummy Plug Monitor
@@ -20,6 +20,17 @@
         position.y = 0;
         scale = 1;
       };
+
+      # window-rules = [
+      #   { # blur alacritty
+      #     matches = [
+      #       { app-id="Alacritty"; }
+      #     ];
+      #     background-effect = {
+      #       blur = true;
+      #     };
+      #   }
+      # ];
 
       # Key bindings with vim-style navigation
       binds = {
@@ -60,7 +71,7 @@
 
         # Maximize
         "Mod+o".action.maximize-column = {};
-        "Mod+Shift+o".action.maximize-window-to-edges = {};
+        # "Mod+Shift+o".action.maximize-window-to-edges = {};
         "Mod+Ctrl+o".action.switch-preset-column-width = {};
 
         # Overview
@@ -159,6 +170,10 @@
       input = {
         mod-key = "Alt";
         keyboard.xkb.options = "ctrl:nocaps";
+
+        touchpad = {
+          natural-scroll = true;
+        };
       };
     };
   };
