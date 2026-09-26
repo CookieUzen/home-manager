@@ -32,9 +32,8 @@
     nixvim.default
 
     pkgs.devbox
-    pkgs.devenv
-
     pkgs.python314Packages.ipython
+    pkgs.python3
 
     pkgs.ncdu
     pkgs.zip
@@ -143,6 +142,12 @@
     };
   };
   
+  programs.devenv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+  };
+  
   programs.zellij = {
     enable = true;
     enableFishIntegration = false;
@@ -175,7 +180,7 @@
           baseUrl = "http://localhost:11434/v1";
           models = [
             {
-              id = "qwen3.6";
+              id = "qwen3.8:27b";
             }
             {
               id = "lfm2.5:8b";
@@ -187,8 +192,9 @@
         };
       };
     };
+    extraPackages = [ pkgs.nodejs ];
     settings = {
-      defaultModel = "qwen3.6";
+      defaultModel = "qwen3.8:27b";
 			defaultProvider = "ollama";
     };
   };
@@ -248,7 +254,7 @@
 
   # note taking
   programs.zk.enable = true;
-  programs.fzf.enable = true;
+  programs.fzf.enable = false;
 
   # zoxide
   programs.zoxide.enable = true;
@@ -257,9 +263,88 @@
   };
 
   # direnv
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+  # programs.direnv = {
+  #   enable = true;
+  #   nix-direnv.enable = true;
+  # };
 
+  programs.atuin = {
+    enable = true;
+
+    enableFishIntegration = true;
+    enableBashIntegration = true;
+
+    # Keeps your fish/vi up-arrow prefix search intact. Ctrl-R still opens Atuin.
+    # Drop this once you decide you prefer Atuin on up-arrow too.
+    flags = [ "--disable-up-arrow" ];
+
+    # Avoids activation failing on an atuin-written config.toml already on disk.
+    forceOverwriteSettings = true;
+
+    daemon = {
+      # Commands are recorded via the daemon instead of blocking shell startup.
+      # Also a prerequisite for command-output capture.
+      enable = true;
+      logLevel = "warn";
+    };
+
+    settings = {
+      # ── search UX ─────────────────────────────────────────────────────────
+      search_mode = "fuzzy"; # prefix | fulltext | fuzzy | skim
+      filter_mode = "global"; # default scope; Ctrl-R cycles it
+      # With direnv/devenv/devbox, per-directory recall is the payoff:
+      filter_mode_shell_up_key_binding = "directory";
+
+      style = "compact";
+      inline_height = 20;
+      show_preview = true;
+      show_help = true;
+      enter_accept = false; # enter edits the line; you press enter again to run
+      keymap_mode = "auto"; # tracks your fish vi mode in the TUI
+
+      # ── privacy: matters a lot before you ever turn sync on ───────────────
+      secrets_filter = true; # skip things that look like credentials
+      history_filter = [
+        "^\\s"                                  # leading space = don't record
+        "(?i)(token|secret|passwo?r?d|api[_-]?key)\\s*="
+        "(?i)^export\\s+.*(TOKEN|SECRET|KEY|PASSWORD)"
+        "(?i)^curl\\b.*-H\\s+.*authorization"
+        "^(pass|op read|gopass|bw get)\\b"
+      ];
+      cwd_filter = [
+        "^/etc/nixos/secrets"
+        "/\\.git/"
+      ];
+
+      # ── sync (off until you decide) ───────────────────────────────────────
+      auto_sync = false;
+      update_check = false; # Nix owns updates
+      sync_frequency = "10m";
+      sync.records = true;
+      # sync_address = "http://<host>.<tailnet>.ts.net:8888";
+
+      # ── AI (off until you stand up a server) ──────────────────────────────
+      ai = {
+        enabled = false;
+        # endpoint = "http://127.0.0.1:8080";       # your atuin-ai-server
+        # model = "llama31";                        # an alias from its config.toml
+        yolo = false; # always confirm before running generated commands
+        capabilities = {
+          enable_history_search = true;
+          enable_history_output = true;
+          enable_file_tools = false;
+          enable_command_execution = false;
+        };
+        opening = {
+          send_cwd = true;
+          send_last_command = true;
+        };
+      };
+
+      stats = {
+        common_prefix = [ "sudo" "doas" ];
+        common_subcommands = [ "cargo" "git" "nix" "nix-shell" "home-manager" "systemctl" "docker" "kubectl" ];
+      };
+    };
+	};
 }
