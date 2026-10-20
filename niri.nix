@@ -178,12 +178,8 @@
     };
   };
 
-  programs.dank-material-shell = {
-    enable = true;
-    niri = {
-      # enableKeybinds = true;   # Sets static preset keybinds
-      enableSpawn = true;      # Auto-start DMS with niri and cliphist, if enabled
-    };
-  };
+  # NOTE: DMS autostart is handled by the system-level dms-shell module
+  # (programs.dms-shell.enable in /etc/nixos/configuration.nix) via its
+  # systemd service, so no flake dependency or enableSpawn needed here.
 
-}     
+}
