@@ -7,7 +7,7 @@
     playerctl
     brightnessctl
     networkmanagerapplet
-    gcr
+    gcr_4
     jq
     curl
     libnotify
@@ -22,11 +22,8 @@
 
   # Link to separate configuration files
   xdg.configFile."hypr/hyprland.conf".source = ./hypr/hyprland.conf;
-  xdg.configFile."waybar/config".source = ./hypr/waybar-config.json;
-  xdg.configFile."waybar/style.css".source = ./hypr/waybar-style.css;
 
-  # Link to separate script files
-  # Ensure these files exist at ./scripts/script-name.sh
+  # Scripts (used by DMS widgets too)
   home.file.".config/waybar/scripts/tailscale-status.sh" = {
     source = ./hypr/scripts/tailscale-status.sh;
     executable = true;
@@ -44,10 +41,12 @@
     executable = true;
   };
 
-  programs.waybar.enable = true;
+  # Hyprland (DMS replaces waybar as the shell)
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    systemd.enable = true;
+    configType = "hyprlang";
   };
 
   programs.hyprlock.enable = true;

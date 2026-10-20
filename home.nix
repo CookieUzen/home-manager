@@ -27,6 +27,7 @@
     pkgs.hello
     pkgs.killall
     pkgs.perl5Packages.vidir
+    pkgs.tuios
 
     # neovim/nixvim config
     nixvim.default
@@ -162,7 +163,7 @@
   };
 
   programs.herdr = {
-    enable = true;
+    enable = true; # disabled 2026-10-04: fails to link due to nixpkgs binutils bug (overlapping FDEs); re-enable once fixed
     settings = {
       terminal = {
         default_shell = "fish";
@@ -180,13 +181,13 @@
           baseUrl = "http://localhost:11434/v1";
           models = [
             {
-              id = "qwen3.8:27b";
+              id = "fredrezones55/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:latest";
             }
             {
-              id = "lfm2.5:8b";
+              id = "igorls/gemma-4-E4B-it-heretic-GGUF:Q4_K_M";
             }
             {
-              id = "gemma4:26b";
+              id = "muse-glimmer:30b";
             }
           ];
         };
@@ -194,7 +195,7 @@
     };
     extraPackages = [ pkgs.nodejs ];
     settings = {
-      defaultModel = "qwen3.8:27b";
+      defaultModel = "fredrezones55/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:latest";
 			defaultProvider = "ollama";
     };
   };
